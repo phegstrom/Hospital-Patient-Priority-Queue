@@ -36,14 +36,14 @@ int main(int argc, char const *argv[])
                 FileStream.open(filePath);
 
                 if(FileStream.is_open()){
-                    string name1, rank1, time1, line;
+                    string name, rank, time, line;
                     getline(FileStream,line);
 
                     while(getline(FileStream,line) && !thisQueue.isFull())
                     {
                         stringstream ss(line);
-                        ss >> name1 >> rank1 >> time1;
-                        thisQueue.enqueue(name1, stoi(rank1), stoi(time1));
+                        ss >> name >> rank >> time;
+                        thisQueue.enqueue(name, stoi(rank), stoi(time));
                     }
                     cout << "Priority Queue full. Send remaining patients to another hospital." << endl;
                 } else {
