@@ -16,49 +16,42 @@ void displayMenu();
 
 int main(int argc, char const *argv[])
 {
-    int cumulativeTime=0;
+    int cumulativeTime = 0;
     PriorityQueue thisQueue(stoi(argv[1]));
     string stringValue;
-    int test = 0;
-    while(test!=6)
+    int selectedValue = 0;
+    while(selectedValue != 6)
     {
         displayMenu();
         getline(cin,stringValue);
-        test = stoi(stringValue);
-        switch(test)
+        selectedValue = stoi(stringValue);
+        switch(selectedValue)
         {
             case 1:
             {
-                string thisfile;
+                string filePath;
+                fstream FileStream;
                 cout << "Enter filename:" << endl;
                 getline(cin, stringValue);
-                fstream FileRead;
-                FileRead.open(thisfile);
+                FileStream.open(filePath);
 
-                if(FileRead.is_open()){
+                if(FileStream.is_open()){
+                    string name1, rank1, time1, line;
+                    getline(FileStream,line);
 
-                    bool nFull = true;
-                    string name1,rank1,time1,line;
-                    getline(FileRead,line);
-
-                    while(getline(FileRead,line) && nFull)
+                    while(getline(FileStream,line) && !thisQueue.isFull())
                     {
                         stringstream ss(line);
                         ss >> name1 >> rank1 >> time1;
-
-                        if (!thisQueue.isFull()){
-                            thisQueue.enqueue(name1, stoi(rank1), stoi(time1));
-                        }
-                        else{
-                            cout << "Priority Queue full. Send remaining patients to another hospital." << endl;
-                            nFull = false;
-                        }
+                        thisQueue.enqueue(name1, stoi(rank1), stoi(time1));
                     }
+                    cout << "Priority Queue full. Send remaining patients to another hospital." << endl;
+                } else {
+                    cout << "Cannot open file" << endl;  
                 }
 
-                else cout << "Cannot open file" << endl;
-            }
                 break;
+            }
             case 2:
             {
                 if (!thisQueue.isFull())
