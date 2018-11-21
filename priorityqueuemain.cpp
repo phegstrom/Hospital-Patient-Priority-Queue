@@ -1,7 +1,6 @@
 //  priorityqueuemain.cpp
 //  Created by Ian Hegstrom on 11/5/18.
 //  Copyright © 2018 Ian Hegstrom. All rights reserved.
-//
 
 
 #include <iostream>
@@ -30,16 +29,16 @@ int main(int argc, char const *argv[])
             case 1:
             {
                 string filePath;
-                fstream FileStream;
+                fstream fileStream;
                 cout << "Enter filename:" << endl;
                 getline(cin, stringValue);
-                FileStream.open(filePath);
+                fileStream.open(filePath);
 
-                if(FileStream.is_open()){
+                if(fileStream.is_open()){
                     string name, rank, time, line;
-                    getline(FileStream,line);
+                    getline(fileStream,line);
 
-                    while(getline(FileStream,line) && !thisQueue.isFull())
+                    while(getline(fileStream,line) && !thisQueue.isFull())
                     {
                         stringstream ss(line);
                         ss >> name >> rank >> time;
@@ -56,19 +55,21 @@ int main(int argc, char const *argv[])
             {
                 if (!thisQueue.isFull())
                 {
-                    string name2,rank2,time2;
-                    int queuerank,time;
+                    string name, rank, time;
+                    int queuerank, time;
 
                     cout << "Enter Patient Name:" << endl;
-                    getline(cin,name2);
+                    getline(cin,name);
                     cout << "Enter Injury Severity:" << endl;
-                    getline(cin,rank2);
+                    getline(cin,rank);
                     cout << "Enter Treatment Time:" << endl;
-                    getline(cin,time2);
+                    getline(cin,time);
 
-                    queuerank = stoi(rank2);
-                    time = stoi(time2);
-                    thisQueue.enqueue(name2,queuerank,time);
+                    queuerank = stoi(rank);
+                    time = stoi(time);
+
+                    thisQueue.enqueue(name,queuerank,time);
+                    cout << "Successfull addition of patient to the PQ" << endl;
                 }
                 else cout << "Priority Queue full. Send Patient to another hospital." << endl;
             }
